@@ -3,16 +3,12 @@ import Modal from "../UI/Modal";
 import classes from "./CartSummary.module.css";
 const CartSummary = (props) => {
   const total = +props.onFoodAdding?.price * +props.onFoodAdding.quantity;
+  const cartSummary = props.onCartDetails;
+  // console.log("The Food In Cart from====>> ", props.onCartDetails);
+  // console.log("The OnFoodAdding", props.onFoodAdding);
   const Items = (
-    <ul style={{ textDecoration: "none" }}>
-      {[
-        {
-          id: props.onFoodAdding?.id,
-          name: props.onFoodAdding?.name,
-          amount: props.onFoodAdding.quantity,
-          price: props.onFoodAdding?.price,
-        },
-      ].map((cartItem) => (
+    <ul>
+      {cartSummary.map((cartItem) => (
         <li className={classes.heading}>{cartItem?.name}</li>
       ))}
     </ul>

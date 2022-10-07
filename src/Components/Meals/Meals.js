@@ -4,6 +4,7 @@ const Meals = (props) => {
   const addingFoodData = (mealsData) => {
     props.onAddFood(mealsData);
   };
+
   return (
     <>
       <MealsSummary />

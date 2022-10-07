@@ -9,7 +9,7 @@ const HeaderCart = (props) => {
           <CartIcon />
         </span>
         <span>Your Cart</span>
-        <span className={classes.badge}>{props.onAddFoodData?.quantity}</span>
+        <span className={classes.badge}>{props.onCartIncrement}</span>
       </button>
     </>
   );

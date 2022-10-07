@@ -10,6 +10,7 @@ const Header = (props) => {
         <HeaderCart
           onCartClick={props.onCartClick}
           onAddFoodData={props.onFoodAdding}
+          onCartIncrement={props.onCartQuantity}
         />
       </header>
       <div className={classes["main-image"]}>

@@ -15,7 +15,6 @@ const MealForm = (props) => {
 
   const foodQuantityHandler = (event) => {
     setFoodQuantity(event.target.value);
-    console.log(foodQuantity);
   };
 
   return (

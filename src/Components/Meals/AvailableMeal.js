@@ -7,7 +7,6 @@ const AvailMeals = (props) => {
   // functions
   const addFoodHandler = (mealsId) => {
     props.onAddFood(mealsId);
-    console.log(mealsId);
   };
   const mealList = DUMMY_MEALS.map((meal) => (
     <MealItem
