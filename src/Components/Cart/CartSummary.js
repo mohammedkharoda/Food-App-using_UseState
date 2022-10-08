@@ -4,11 +4,15 @@ import Modal from "../UI/Modal";
 import classes from "./CartSummary.module.css";
 const CartSummary = (props) => {
   const cartSummary = props.onCartDetails;
+  const orderName = cartSummary.map((orderItem) => orderItem.name);
+  const orderQuantity = cartSummary.map((orderItem) => orderItem.quantity);
+  const mergingOrder = [orderName, orderQuantity];
   let cartTotal = 0;
   cartSummary.forEach((items) => {
     cartTotal = cartTotal + items.price * items.quantity;
   });
 
+  // Meals Adding into the cart
   const updateCartDataHandler = (mealId, type) => {
     if (type === "increase") {
       props.setFoodInCart((prevValue) => {
@@ -26,6 +30,34 @@ const CartSummary = (props) => {
     }
   };
 
+  // Meals Removing from the Cart
+  const removeCartHandler = (mealId, type) => {
+    if (type === "decrease") {
+      props.setFoodInCart((prevValue) => {
+        let foundMeal = prevValue.find((cartItem) => cartItem.id === mealId);
+        let tempCartData = [...prevValue];
+        if (
+          tempCartData.find((cartId) => cartId.id === mealId) &&
+          foundMeal.quantity <= 0
+        ) {
+          tempCartData.shift(foundMeal);
+        } else {
+          tempCartData = tempCartData.filter((item) => item.id !== mealId);
+          foundMeal = { ...foundMeal, quantity: foundMeal.quantity - 1 };
+          tempCartData.push(foundMeal);
+        }
+        return tempCartData;
+      });
+    }
+  };
+
+  // Order Button handler
+  const orderHandler = () => {
+    cartSummary.map((orderItem) => {
+      return console.log(`Ordering ${orderItem.name} x ${orderItem.quantity}`);
+    });
+  };
+
   const Items = (
     <ul>
       {cartSummary.map((cartItem) => (
@@ -41,7 +73,11 @@ const CartSummary = (props) => {
               >
                 +
               </button>
-              <button> - </button>
+              <button
+                onClick={() => removeCartHandler(cartItem.id, "decrease")}
+              >
+                -
+              </button>
             </div>
           </div>
         </>
@@ -66,7 +102,9 @@ const CartSummary = (props) => {
           >
             Close
           </button>
-          <button className={classes.button}>Order</button>
+          <button className={classes.button} onClick={orderHandler}>
+            Order
+          </button>
         </div>
       </div>
     </Modal>
