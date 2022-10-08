@@ -7,6 +7,8 @@ function App(props) {
   const [cartShown, setCartShown] = useState(false);
   const [foodData, setFoodData] = useState();
   const [foodInCart, setFoodInCart] = useState([]);
+  const [count, setCount] = useState(1);
+
   const showCartHandler = () => {
     setCartShown(true);
   };
@@ -26,12 +28,13 @@ function App(props) {
       });
     } else {
       let updateCartData = foodInCart.filter(
-        (cartItem) => cartItem.id === mealsAddData.id
+        (cartItem) => cartItem.id !== mealsAddData.id
       );
       updateCartData = [...updateCartData, mealsAddData];
+      setFoodInCart(updateCartData);
     }
   };
-  
+
   return (
     <div>
       {cartShown && (
@@ -39,12 +42,15 @@ function App(props) {
           onCloseCart={hiddenCart}
           onFoodAdding={foodData}
           onCartDetails={foodInCart}
+          setFoodInCart={setFoodInCart}
         />
       )}
       <Header
         onCartClick={showCartHandler}
         onFoodAdding={foodData}
-        onCartQuantity={foodInCart.length}
+        onCartQuantity={foodInCart
+          .map((qty) => +qty.quantity)
+          .reduce((prevValue, currValue) => prevValue + currValue, 0)}
       />
       <main>
         <Meals onAddFood={FoodAddHandler} />
